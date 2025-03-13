@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Expenses tracker",
   "main": "server.js",
+  "engines": {
+    "node": ""
+  },
   "scripts": {
     "start": "nodemon src/server.js",
     "watch": "nodemon src/server.js"
