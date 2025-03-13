@@ -1,13 +1,27 @@
 const express = require('express');
 const dbConnect = require('./config/dbConfig'); 
+const { registerUser } = require('./controllers/users/usersCtrl.js');
+const userRoute = require('./routes/userRoutes.js');
+const { errprHandler } = require('./middlewares/errorMiddleware.js');
+
 
 const app = express();
+
+
 
 // Connect to MongoDB
 dbConnect(); 
 
+//middlewares
+app.use(express.json());
+
+//routes
+app.use("/",userRoute);
+
+//Error
+app.use(errprHandler);
+
+//income
+//expenses
 module.exports = app;
 
-//Q55HNQlnMjoNLYEy Imasha
-
-//mongodb+srv://Imasha:<db_password>@financecluster.8glqd.mongodb.net/?retryWrites=true&w=majority&appName=financeCluster
