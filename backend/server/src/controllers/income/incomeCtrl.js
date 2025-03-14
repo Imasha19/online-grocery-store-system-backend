@@ -13,4 +13,29 @@ const createIncCtrl = expressAsyncHandler(async (req, res) => {
     }
 });
 
-module.exports ={ createIncCtrl};
+
+// Fetch all income
+const fetchAllIncCtrl = expressAsyncHandler(async (req, res) => {
+    try {
+        const income = await Income.find({});
+        res.status(200).json(income);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Fetch single income
+const fetchIncDetailsCtrl = expressAsyncHandler(async (req, res) => {
+    const { id } = req.params;
+    try {
+        const income = await Income.findById(id);
+        if (!income) {
+            res.status(404).json({ message: 'Income not found' });
+        } else {
+            res.status(200).json(income);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+module.exports ={ fetchAllIncCtrl, createIncCtrl, fetchIncDetailsCtrl };
