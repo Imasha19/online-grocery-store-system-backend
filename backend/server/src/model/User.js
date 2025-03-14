@@ -31,6 +31,7 @@ const userSchema = mongoose.Schema({
   }
 );
 
+//Hash password
 userSchema.pre("save", async function (next){
     if(!this.isModified("password")){
         next();
@@ -40,6 +41,11 @@ userSchema.pre("save", async function (next){
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
+
+//Verify password
+userSchema.methods.isPasswordMatch = async function(enteredPassword){
+    return await bcrypt.compare(enteredPassword, this.password);
+}
 
 
 //compile schema into model

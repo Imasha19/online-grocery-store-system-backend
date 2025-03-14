@@ -1,5 +1,9 @@
 const expressAsyncHandler = require('express-async-handler');
 const User = require("../../model/User");
+const generateToken = require('../../middlewares/generateToken');
+
+
+
 
 const registerUser =expressAsyncHandler(async (req,res) =>{
     const{email,firstname,lastname,password} = req?.body;
@@ -27,5 +31,27 @@ const fetchUsersCtrl = async(req,res) =>{
     }
 };
 
+// Login user
+const loginUserCtrl = expressAsyncHandler(async (req, res) => {
+    const { email, password } = req?.body;
+    // Find the user in the database
+    const userFound = await User.findOne({ email });
 
-module.exports = {registerUser ,fetchUsersCtrl};
+    // Check if the user password matches
+    if (userFound && await userFound.isPasswordMatch(password)) {
+        res.json({
+            _id: userFound?._id,
+            firstname: userFound?.firstname,
+            lastname: userFound?.lastname,
+            email: userFound?.email,
+            isAdmin: userFound?.isAdmin,
+            token: generateToken(userFound?._id),
+        });
+    } else {
+        res.status(401);
+        throw new Error('Invalid email or password');
+    }
+});
+
+
+module.exports = {registerUser ,fetchUsersCtrl,loginUserCtrl};

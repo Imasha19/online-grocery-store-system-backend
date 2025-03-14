@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const dbConnect = require('./config/dbConfig'); 
 const { registerUser } = require('./controllers/users/usersCtrl.js');
-const userRoute = require('./routes/userRoutes.js');
+const userRoute = require('./routes/Users/userRoutes.js');
 const { errprHandler, notFound } = require('./middlewares/errorMiddleware.js');
 
 
