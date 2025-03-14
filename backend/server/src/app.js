@@ -4,6 +4,7 @@ const dbConnect = require('./config/dbConfig');
 const { registerUser } = require('./controllers/users/usersCtrl.js');
 const userRoute = require('./routes/Users/userRoutes.js');
 const { errprHandler, notFound } = require('./middlewares/errorMiddleware.js');
+const incomeRoute = require('./routes/income/incomeRoutes.js');
 
 
 const app = express();
@@ -21,8 +22,11 @@ app.get('/', (req, res) => {
     res.json({msg: 'Welcome to the Expenses Tracker API'});
 })
 
-//routes
+//users routes
 app.use("/api/users",userRoute);
+
+//income routes
+app.use("/api/income",incomeRoute);
 
 //Error
 app.use(notFound);
