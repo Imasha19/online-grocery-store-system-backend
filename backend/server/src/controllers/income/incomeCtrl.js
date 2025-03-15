@@ -16,6 +16,7 @@ const createIncCtrl = expressAsyncHandler(async (req, res) => {
 
 // Fetch all income
 const fetchAllIncCtrl = expressAsyncHandler(async (req, res) => {
+    //console.log(req.user);
     const { page  } = req.query;
     
     try {
