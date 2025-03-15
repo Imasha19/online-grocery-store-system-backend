@@ -16,8 +16,10 @@ const createIncCtrl = expressAsyncHandler(async (req, res) => {
 
 // Fetch all income
 const fetchAllIncCtrl = expressAsyncHandler(async (req, res) => {
+    const { page  } = req.query;
+    
     try {
-        const income = await Income.find({});
+        const income = await Income.paginate({},{limit:10 , page:Number(page)});
         res.status(200).json(income);
     } catch (error) {
         res.status(500).json({ message: error.message });

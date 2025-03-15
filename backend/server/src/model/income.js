@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 //schema
 const incomeSchema = mongoose.Schema({
@@ -31,6 +31,8 @@ const incomeSchema = mongoose.Schema({
     
   }
 );
+//pagination
+incomeSchema.plugin(mongoosePaginate);
 
 const Income = mongoose.model('Income', incomeSchema);
 
