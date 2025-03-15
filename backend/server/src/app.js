@@ -5,7 +5,7 @@ const { registerUser } = require('./controllers/users/usersCtrl.js');
 const userRoute = require('./routes/Users/userRoutes.js');
 const { errprHandler, notFound } = require('./middlewares/errorMiddleware.js');
 const incomeRoute = require('./routes/income/incomeRoutes.js');
-
+const expenceRoute = require('./routes/income/expenseRoutes.js');
 
 const app = express();
 //env
@@ -27,6 +27,10 @@ app.use("/api/users",userRoute);
 
 //income routes
 app.use("/api/income",incomeRoute);
+
+//expenses routes
+app.use("/api/expenses",expenceRoute);
+
 
 //Error
 app.use(notFound);
