@@ -38,4 +38,36 @@ const fetchIncDetailsCtrl = expressAsyncHandler(async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-module.exports ={ fetchAllIncCtrl, createIncCtrl, fetchIncDetailsCtrl };
+
+//update
+const updateIncCtrl = expressAsyncHandler(async (req, res) => {
+    const { id } = req.params
+    const { title, description, amount} = req.body;
+ 
+ 
+   try { 
+    const income = await Income.findByIdAndUpdate(
+         id,{ title, description, amount},
+    { new: true }
+    );
+    res.json(income);
+} catch (error) {
+    res.status(500).json({ message: error.message });
+}
+});
+
+//delete
+const deleteInCtrl = expressAsyncHandler(async (req, res) => {
+    const { id } = req.params;
+    try {
+        const income = await Income.findByIdAndDelete(id);
+        if (!income) {
+            res.status(404).json({ message: 'Income not found' });
+        } else {
+            res.status(200).json(income);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+module.exports ={ fetchAllIncCtrl, createIncCtrl, fetchIncDetailsCtrl ,updateIncCtrl,deleteInCtrl};
