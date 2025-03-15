@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 //schema
 const expenseSchema = mongoose.Schema({
@@ -32,6 +32,8 @@ const expenseSchema = mongoose.Schema({
   }
 );
 
+//pagination
+expenseSchema.plugin(mongoosePaginate);
 const Expense = mongoose.model('Expense', expenseSchema);
 
 module.exports = Expense;
