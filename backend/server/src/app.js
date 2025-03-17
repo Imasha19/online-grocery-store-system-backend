@@ -6,6 +6,7 @@ const userRoute = require('./routes/Users/userRoutes.js');
 const { errprHandler, notFound } = require('./middlewares/errorMiddleware.js');
 const incomeRoute = require('./routes/income/incomeRoutes.js');
 const expenceRoute = require('./routes/income/expenseRoutes.js');
+const cors = require('cors');
 
 const app = express();
 //env
@@ -16,6 +17,7 @@ dotenv.config();
 dbConnect(); 
 
 //middlewares
+app.use(cors()); // Use CORS middleware
 app.use(express.json());
 
 app.get('/', (req, res) => {
