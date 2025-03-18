@@ -53,5 +53,22 @@ const loginUserCtrl = expressAsyncHandler(async (req, res) => {
     }
 });
 
+// Update user details
+const updateUserCtrl = expressAsyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { firstname, lastname, email, password, isAdmin } = req.body;
 
-module.exports = {registerUser ,fetchUsersCtrl,loginUserCtrl};
+    try {
+        const user = await User.findByIdAndUpdate(
+            id,
+            { firstname, lastname, email, password, isAdmin },
+            { new: true }
+        );
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+module.exports = {registerUser ,fetchUsersCtrl,loginUserCtrl,updateUserCtrl};
