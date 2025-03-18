@@ -24,6 +24,10 @@ const expenseSchema = mongoose.Schema({
          ref:"User",
          required:[true,"User ID is required"],
    },
+   date: {
+    type: Date,
+    default: Date.now,
+},
    
   },
   {
