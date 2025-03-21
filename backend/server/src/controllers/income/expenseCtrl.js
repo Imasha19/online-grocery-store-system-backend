@@ -26,7 +26,7 @@ const fetchAllExpCtrl = expressAsyncHandler(async (req, res) => {
 });
 
 // Fetch single income
-const fetchIExpDetailsCtrl = expressAsyncHandler(async (req, res) => {
+const fetchExpIDetailsCtrl = expressAsyncHandler(async (req, res) => {
     const { id } = req.params;
     try {
         const expense = await Expense.findById(id);
@@ -37,6 +37,16 @@ const fetchIExpDetailsCtrl = expressAsyncHandler(async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+});
+
+// Get total expenses
+const getTotalExpense = expressAsyncHandler(async (req, res) => {
+    try {
+        const totalExpense = await Expense.aggregate([{ $group: { _id: null, total: { $sum: "$amount" } } }]);
+        res.status(200).json({ totalExpenses: totalExpense[0]?.total || 0 });
+    } catch (error) {
+        res.status(500).json({ message: "Server Error" });
     }
 });
 
@@ -71,4 +81,4 @@ const deleteExpCtrl = expressAsyncHandler(async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-module.exports ={ createExpCtrl,fetchAllExpCtrl,fetchIExpDetailsCtrl,updateExpCtrl,deleteExpCtrl};
+module.exports = { createExpCtrl, fetchAllExpCtrl, fetchExpIDetailsCtrl, updateExpCtrl, deleteExpCtrl, getTotalExpense };
